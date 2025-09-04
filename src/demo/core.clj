@@ -1,6 +1,12 @@
 (ns demo.core
   (:gen-class))
 
+;; Ensure that the SVG code is evaluated
+(require 'utils.carlos-math)
+;; Refer the namespace so that you don't have to use the
+;; fully qualified name to reference svg functions
+(refer 'utils.carlos-math)
+
 ; 0
 (def my-number 1)
 (def my-list '(1 2 3 4 5))
@@ -157,10 +163,55 @@
 ; (concat [1 2] [3 4])
 ;; => (1 2 3 4)
 
+
+; 18 - Macros
+;
+; When is a macro that is part of clojure core
+; Using (macroexpand  '(when (< 1 2) (str "Do something...")))
+; Will will see (if (< 1 2) (do (str Do something...)))
+;
+; Macro definitions look much like function definitions. They have a name,
+;an optional document string, an argument list, and a body. The body will
+;almost always return a list. This makes sense because macros are a way of
+;transforming a data structure into a form Clojure can evaluate, and Clojure
+;uses lists to represent function calls, special form calls, and macro calls.
+;
+; (defmacro infix
+;   "Use this macro when you pine for the notation of your childhood"
+;   [infixed]
+;   (list (second infixed) (first infixed) (last infixed)))
+;
+;  This macro rearranges a list into the correct order for infix notation.
+;Here’s an example:
+;
+;  (infix (1 + 1))
+;  ; => 2
+;
+; The single quote character ' is a reader macro for (quote x):
+;
+; If we add quote at the beginning, it returns an unevaluated data
+;structure
+; (quote (+ 1 2))
+;  ; => (+ 1 2)
+;
+;
+;
+(defn is-less-than
+  [a b]
+  (when (< a b)
+    (str "Do something...")))
+
+; TODO FIXME
+(defmacro ptln
+  "Documentation"
+  {:added "1.0"} ; I think this is the version of inclusion
+  [a]
+  (list 'println a))
+
 (defn -main
   "I don't do a whole lot ... yet."
   [& args]
-  (println "Hello, World!")
+  (println "Hello, World!" " | " (ns-name *ns*) " | " (ns-interns *ns*))
   (println "1) The result of my sum is:" (sum-two-number 3 4))
   (println "2) The result of adding multiple numbers is:" (sum-multiples-numbers 5 3 4))
   (println "3.1) Testing apply to with one value: " (apply_to (fn [a] (str ">" a "<"))  "A"))
@@ -174,4 +225,10 @@
   (println "10) Destructing a map wih let: " (destructing-with-let))
   (println "11) Map with multiples inputs, (a b c) and (1 2 3) equal to:" (using-map-with-multiple-lists '("a" "b" "c") '(1 2 3)))
   (println "12) Extracting keys from vector or list of maps using map function: " (extract-keys-of-list-or-vector-of-maps))
+  (println "18) 1 < 2 = " (is-less-than 1 2) "2 < 1 = " (is-less-than 2 1) " | " (macroexpand  '(when (< 1 2) (str "Do something..."))))
+
+
+  (println "??) The result of the sum-tow-number function " (sum-two-number 3 4))
+  (println "??) " (ptln "=:)="))
+  (println ">> " (ns-name *ns*) " | " (ns-interns *ns*) " | " (ns-map *ns*))
   )
