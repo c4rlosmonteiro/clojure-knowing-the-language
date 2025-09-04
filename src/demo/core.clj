@@ -208,6 +208,17 @@
   [a]
   (list 'println a))
 
+; 19 - thread-last macro ->>
+; In Clojure, ->> is a "thread-last" macro. It is used to make
+; code more readable by chaining operations where the result of
+; one operation becomes the last argument to the next operation.
+(defn testing-thread-last-macro
+  ""
+  []
+  (->> my-list
+       (map #(str "[" % "]"))
+       (apply str "Result: ")))
+
 (defn -main
   "I don't do a whole lot ... yet."
   [& args]
@@ -226,6 +237,7 @@
   (println "11) Map with multiples inputs, (a b c) and (1 2 3) equal to:" (using-map-with-multiple-lists '("a" "b" "c") '(1 2 3)))
   (println "12) Extracting keys from vector or list of maps using map function: " (extract-keys-of-list-or-vector-of-maps))
   (println "18) 1 < 2 = " (is-less-than 1 2) "2 < 1 = " (is-less-than 2 1) " | " (macroexpand  '(when (< 1 2) (str "Do something..."))))
+  (println "19) " (testing-thread-last-macro))
 
 
   (println "??) The result of the sum-tow-number function " (sum-two-number 3 4))

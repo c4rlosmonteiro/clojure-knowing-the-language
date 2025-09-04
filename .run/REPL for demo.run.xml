@@ -1,0 +1,12 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="REPL for demo" type="ClojureREPL" factoryName="Local" activateToolWindowBeforeRun="false">
+    <option name="configVersion" value="1" />
+    <option name="displayName" value="REPL for demo" />
+    <option name="execution" value="LEININGEN" />
+    <module name="demo" />
+    <option name="options" />
+    <option name="profiles" />
+    <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+    <method v="2" />
+  </configuration>
+</component>
